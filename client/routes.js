@@ -16,8 +16,10 @@ if (typeof require.ensure !== 'function') {
  */
 if (process.env.NODE_ENV !== 'production') {
   // Require async routes only in development for react-hot-reloader to work.
-  require('./modules/Post/pages/PostListPage/PostListPage');
-  require('./modules/Post/pages/PostDetailPage/PostDetailPage');
+  require('./modules/AppDashboard/components/Login');
+  require('./modules/AppDashboard/components/Navigation');
+  require('./modules/ShowStories/components/AllStories');
+  require('./modules/ShowStories/components/CreateStory');
 }
 
 // react-router setup with code-splitting
@@ -27,15 +29,29 @@ export default (
     <IndexRoute
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
-          cb(null, require('./modules/Post/pages/PostListPage/PostListPage').default);
+          cb(null, require('./modules/AppDashboard/components/Login').default);
+        });
+      }}
+    />
+     <Route path="/menu"
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/AppDashboard/components/Navigation').default);
+        });
+      }} />
+    <Route
+      path="/stories"
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/ShowStories/components/AllStories').default);
         });
       }}
     />
     <Route
-      path="/posts/:slug-:cuid"
+      path="/create"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
-          cb(null, require('./modules/Post/pages/PostDetailPage/PostDetailPage').default);
+          cb(null, require('./modules/ShowStories/components/CreateStory').default);
         });
       }}
     />
